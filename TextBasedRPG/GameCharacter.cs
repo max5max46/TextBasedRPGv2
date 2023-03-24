@@ -16,7 +16,7 @@ namespace TextBasedRPG
         public void TakeDamage(int damage = 0)
         {
             health -= damage;
-            if (health == 0)
+            if (health < 1)
                 alive = false;
         }
 
