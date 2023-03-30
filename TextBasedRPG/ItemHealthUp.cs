@@ -8,10 +8,10 @@ namespace TextBasedRPG
 {
     internal class ItemHealthUp : Item
     {
-        public ItemHealthUp(int x, int y, Player player) : base(x, y, player)
+        public ItemHealthUp(Vector2 position, Player player) : base(position, player)
         {
-            sprite = '+';
-            spriteColor = ConsoleColor.Green;
+            sprite.character = '+';
+            sprite.color = ConsoleColor.Green;
         }
         public override void ItemEffect()
         {

@@ -18,8 +18,9 @@ namespace TextBasedRPG
             health = Universal.PLAYER_HEALTH;
             maxHealth = Universal.PLAYER_HEALTH;
             damage = Universal.PLAYER_DAMAGE;
-            sprite = 'P';
-            spriteColor = ConsoleColor.Green;
+            sprite.character = 'P';
+            sprite.color = ConsoleColor.Green;
+            sprite.renderPriority = 1;
 
             char[,] loadedMap = Universal.loadMap();
 
@@ -29,14 +30,13 @@ namespace TextBasedRPG
                 {
                     if (loadedMap[i, j] == 'P')
                     {
-                        x = i;
-                        y = j;
+                        position.x = i;
+                        position.y = j;
                     }
                 }
             }
 
-            tempX = x;
-            tempY = y;
+            tempPosition = position;
 
         }
 
@@ -45,55 +45,49 @@ namespace TextBasedRPG
             if (health == 0)
                 return;
 
-            tempX = x;
-            tempY = y;
-
+            tempPosition = position;
 
             ClearInput();
             ConsoleKeyInfo keyInfo;
             keyInfo = Console.ReadKey(true);
 
             if (keyInfo.KeyChar == 's' || keyInfo.Key == ConsoleKey.DownArrow)
-                y++;
+                position.y++;
 
             if (keyInfo.KeyChar == 'w' || keyInfo.Key == ConsoleKey.UpArrow)
-                y--;
+                position.y--;
 
             if (keyInfo.KeyChar == 'a' || keyInfo.Key == ConsoleKey.LeftArrow)
-                x--;
+                position.x--;
 
             if (keyInfo.KeyChar == 'd' || keyInfo.Key == ConsoleKey.RightArrow)
-                x++;
+                position.x++;
 
             //Collision Check with map object
-            if (Universal.loadMap()[x, y] == 'X')
+            if (Universal.loadMap()[position.x, position.y] == 'X')
             {
-                x = tempX;
-                y = tempY;
+                position = tempPosition;
             }
 
             //Collision with win
-            if (Universal.loadMap()[x, y] == 'W')
+            if (Universal.loadMap()[position.x, position.y] == 'W')
             {
                 Universal.DisplayText("YOU WIN!!!!!");
-                x = tempX;
-                y = tempY;
+                position = tempPosition;
             }
 
             //Collision Check with Enemys
-            if (enemyManager.IsEnemyHere(x, y, true))
+            if (enemyManager.IsEnemyHere(position, true))
             {
-                enemyManager.HitEnemy(x,y,damage);
-                x = tempX;
-                y = tempY;
+                enemyManager.HitEnemy(position, damage);
+                position = tempPosition;
             }
 
             //Collision Check with items
-            if (itemManager.IsItemHere(x, y))
+            if (itemManager.IsItemHere(position))
             {
-                itemManager.CollectItem(x,y);
-                x = tempX;
-                y = tempY;
+                itemManager.CollectItem(position);
+                position = tempPosition;
             }
         }
 

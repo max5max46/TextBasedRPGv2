@@ -8,38 +8,37 @@ namespace TextBasedRPG
 {
     internal class EnemyBouncer : Enemy
     {
-        public EnemyBouncer(int x, int y, EnemyManager manager) : base(x, y)
+        public EnemyBouncer(Vector2 position, EnemyManager manager) : base(position)
         {
             health = 5;
             maxHealth = health;
             damage = 2;
-            sprite = 'B';
-            spriteColor = ConsoleColor.Magenta;
+            sprite.character = 'B';
+            sprite.color = ConsoleColor.Magenta;
         }
 
         public override void Update()
         {
-            tempX = x;
-            tempY = y;
+            tempPosition = position;
 
             //AI Movement
 
             //Move Towards player
-            if (manager.player.x + manager.player.y - (x + y) < 4 && manager.player.x + manager.player.y - (x + y) > -4)
+            if (manager.player.position.x + manager.player.position.y - (position.x + position.y) < 4 && manager.player.position.x + manager.player.position.y - (position.x + position.y) > -4)
             {
-                if (Math.Abs(manager.player.x - x) > Math.Abs(manager.player.y - y))
+                if (Math.Abs(manager.player.position.x - position.x) > Math.Abs(manager.player.position.y - position.y))
                 {
-                    if (manager.player.x > x)
-                        x++;
+                    if (manager.player.position.x > position.x)
+                        position.x++;
                     else
-                        x--;
+                        position.x--;
                 }
                 else
                 {
-                    if (manager.player.y > y)
-                        y++;
+                    if (manager.player.position.y > position.y)
+                        position.y++;
                     else
-                        y--;
+                        position.y--;
                 }
             }
 

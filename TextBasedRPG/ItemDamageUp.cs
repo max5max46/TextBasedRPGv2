@@ -8,10 +8,10 @@ namespace TextBasedRPG
 {
     internal class ItemDamageUp : Item
     {
-        public ItemDamageUp(int x, int y, Player player) : base(x, y, player)
+        public ItemDamageUp(Vector2 position, Player player) : base(position, player)
         {
-            sprite = '^';
-            spriteColor = ConsoleColor.DarkRed;
+            sprite.character = '^';
+            sprite.color = ConsoleColor.DarkRed;
         }
         public override void ItemEffect()
         {

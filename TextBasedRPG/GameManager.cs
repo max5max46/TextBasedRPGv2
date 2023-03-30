@@ -45,8 +45,8 @@ namespace TextBasedRPG
 
                 renderer.Render();
 
-                enemyManager.Update();
                 player.Update();
+                enemyManager.Update();
                 UI.Update();
 
             }

@@ -16,13 +16,22 @@ namespace TextBasedRPG
         public void TakeDamage(int damage = 0)
         {
             health -= damage;
+
+            if (health < 0)
+                health = 0;
+
             if (health < 1)
                 alive = false;
         }
 
         public override void Draw()
         {
-            if (health < 1) sprite = 'X';
+            if (health < 1) 
+            {
+                sprite.character = 'X';
+                sprite.renderPriority = 9;
+            }
+
             base.Draw();
         }
     }

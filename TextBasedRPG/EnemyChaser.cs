@@ -8,38 +8,36 @@ namespace TextBasedRPG
 {
     internal class EnemyChaser : Enemy
     {
-        public EnemyChaser(int x, int y, EnemyManager manager) : base(x, y)
+        public EnemyChaser(Vector2 position, EnemyManager manager) : base(position)
         {
             health = 3;
             maxHealth = health;
             damage = 1;
-            sprite = 'C';
-            spriteColor = ConsoleColor.Red;
+            sprite.character = 'C';
+            sprite.color = ConsoleColor.Red;
         }
 
         public override void Update()
         {
-            tempX = x;
-            tempY = y;
+            tempPosition = position;
 
             //AI Movement
 
-            //Move Towards player
-            if (manager.player.x + manager.player.y - (x + y) < 7 && manager.player.x + manager.player.y - (x + y) > -7)
+            if (manager.player.position.x + manager.player.position.y - (position.x + position.y) < 6 && manager.player.position.x + manager.player.position.y - (position.x + position.y) > -6)
             {
-                if (Math.Abs(manager.player.x - x) > Math.Abs(manager.player.y - y))
+                if (Math.Abs(manager.player.position.x - position.x) > Math.Abs(manager.player.position.y - position.y))
                 {
-                    if (manager.player.x > x)
-                        x++;
+                    if (manager.player.position.x > position.x)
+                        position.x++;
                     else
-                        x--;
+                        position.x--;
                 }
                 else
                 {
-                    if (manager.player.y > y)
-                        y++;
+                    if (manager.player.position.y > position.y)
+                        position.y++;
                     else
-                        y--;
+                        position.y--;
                 }
             }
             else
@@ -48,16 +46,16 @@ namespace TextBasedRPG
                 switch (Universal.GenerateRandomNumber(1, 4))
                 {
                     case 1:
-                        x++;
+                        position.x++;
                         break;
                     case 2:
-                        x--;
+                        position.x--;
                         break;
                     case 3:
-                        y++;
+                        position.y++;
                         break;
                     case 4:
-                        y--;
+                        position.y--;
                         break;
                 }
             }

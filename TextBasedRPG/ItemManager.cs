@@ -35,19 +35,19 @@ namespace TextBasedRPG
                 {
                     if (loadedMap[x, y] == '#')
                     {
-                        items[itemArrayIndex] = new ItemMaxHealthUp(x, y, player);
+                        items[itemArrayIndex] = new ItemMaxHealthUp(new Vector2(x, y), player);
                         itemArrayIndex++;
                     }
 
                     if (loadedMap[x, y] == '^')
                     {
-                        items[itemArrayIndex] = new ItemDamageUp(x, y, player);
+                        items[itemArrayIndex] = new ItemDamageUp(new Vector2(x, y), player);
                         itemArrayIndex++;
                     }
 
                     if (loadedMap[x, y] == '+')
                     {
-                        items[itemArrayIndex] = new ItemHealthUp(x, y, player);
+                        items[itemArrayIndex] = new ItemHealthUp(new Vector2(x, y), player);
                         itemArrayIndex++;
                     }
 
@@ -64,22 +64,22 @@ namespace TextBasedRPG
             }
         }
 
-        public bool IsItemHere(int x, int y)
+        public bool IsItemHere(Vector2 position)
         {
             for (int i = 0; i < items.Length; i++)
             {
-                if (items[i].x == x && items[i].y == y && items[i].collected == false)
+                if (items[i].position == position && items[i].collected == false)
                     return true;
             }
 
             return false;
         }
 
-        public void CollectItem(int x, int y)
+        public void CollectItem(Vector2 position)
         {
             for (int i = 0; i < items.Length; i++)
             {
-                if (items[i].x == x && items[i].y == y)
+                if (items[i].position == position)
                     items[i].ItemEffect();
             }
         }

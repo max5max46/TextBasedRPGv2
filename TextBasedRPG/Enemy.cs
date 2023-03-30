@@ -8,39 +8,34 @@ namespace TextBasedRPG
 {
     internal class Enemy : GameCharacter
     {
-
         public EnemyManager manager;
 
-        public Enemy(int x, int y)
+        public Enemy(Vector2 position)
         {
             alive = true;
-            this.x = x;
-            this.y = y;
-            tempX = this.x;
-            tempY = this.y;
+            this.position = position;
+            tempPosition = position;
+            sprite.renderPriority = 3;
         }
 
         public virtual void Update()
         {
             //Collision Check with map object
-            if (Universal.loadMap()[x,y] == 'X')
+            if (Universal.loadMap()[position.x, position.y] == 'X' && Universal.loadMap()[position.x, position.y] == 'W')
             {
-                x = tempX;
-                y = tempY;
+                position = tempPosition;
             }
 
             //Collision Check for other enemys
-            if (manager.IsEnemyHere(x,y,false))
+            if (manager.IsEnemyHere(position, false))
             {
-                x = tempX;
-                y = tempY;
+                position = tempPosition;
             }
 
             //Collision Check for Player
-            if (manager.IsPlayerHere(x,y))
+            if (manager.IsPlayerHere(position))
             {
-                x = tempX;
-                y = tempY;
+                position = tempPosition;
                 manager.HitPlayer(damage);
             }
         }

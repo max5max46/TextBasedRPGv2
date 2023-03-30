@@ -10,12 +10,12 @@ namespace TextBasedRPG
     {
         public Player player;
         public bool collected;
-        public Item(int x, int y, Player player)
+        public Item(Vector2 position, Player player)
         {
             collected = false;
-            this.x = x;
-            this.y = y;
+            this.position = position;
             this.player = player;
+            sprite.renderPriority = 5;
         }
 
         public abstract void ItemEffect();

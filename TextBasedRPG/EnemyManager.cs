@@ -38,19 +38,19 @@ namespace TextBasedRPG
                 {
                     if (loadedMap[x, y] == 'C')
                     {
-                        enemys[enemyArrayIndex] = new EnemyChaser(x, y, enemyManager); 
+                        enemys[enemyArrayIndex] = new EnemyChaser(new Vector2(x, y), enemyManager); 
                         enemyArrayIndex++;
                     }
 
                     if (loadedMap[x, y] == 'R')
                     {
-                        enemys[enemyArrayIndex] = new EnemyRunner(x, y, enemyManager);
+                        enemys[enemyArrayIndex] = new EnemyRunner(new Vector2(x, y), enemyManager);
                         enemyArrayIndex++;
                     }
 
                     if (loadedMap[x, y] == 'B')
                     {
-                        enemys[enemyArrayIndex] = new EnemyBouncer(x, y, enemyManager);
+                        enemys[enemyArrayIndex] = new EnemyBouncer(new Vector2(x, y), enemyManager);
                         enemyArrayIndex++;
                     }
                         
@@ -77,13 +77,13 @@ namespace TextBasedRPG
         }
 
 
-        public bool IsEnemyHere (int x, int y, bool isntEnemy)
+        public bool IsEnemyHere (Vector2 position, bool isntEnemy)
         {
             bool foundSelf = isntEnemy;
 
             for (int i = 0; i < enemys.Length; i++)
             {
-                if (enemys[i].x == x && enemys[i].y == y && enemys[i].alive)
+                if (enemys[i].position == position && enemys[i].alive)
                 {
                     if (foundSelf == true)
                         return true;
@@ -95,9 +95,9 @@ namespace TextBasedRPG
             return false;
         }
 
-        public bool IsPlayerHere(int x, int y)
+        public bool IsPlayerHere(Vector2 position)
         {
-            if (player.x == x && player.y == y && player.alive)
+            if (player.position == position && player.alive)
                 return true;
 
             return false;
@@ -108,11 +108,11 @@ namespace TextBasedRPG
             player.TakeDamage(damage);
         }
 
-        public void HitEnemy(int x, int y, int damage)
+        public void HitEnemy(Vector2 position, int damage)
         {
             for (int i = 0; i < enemys.Length; i++)
             {
-                if (enemys[i].x == x && enemys[i].y == y)
+                if (enemys[i].position == position && enemys[i].alive)
                 {
                     enemys[i].TakeDamage(damage);
                     Universal.DisplayText("Enemy Health: " + enemys[i].health + "      ");

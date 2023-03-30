@@ -8,12 +8,9 @@ namespace TextBasedRPG
 {
     internal class GameObject
     {
-        public int x;
-        public int y;
-        public int tempX;
-        public int tempY;
-        public char sprite;
-        public ConsoleColor spriteColor = ConsoleColor.White;
+        public Vector2 position;
+        public Vector2 tempPosition;
+        public Sprite sprite;
 
         static public int offsetX = Universal.OFFSET_X;
         static public int offsetY = Universal.OFFSET_Y;
@@ -21,7 +18,7 @@ namespace TextBasedRPG
 
         public virtual void Draw()
         {
-            GameManager.renderer.SendToRenderer(x, y, sprite, spriteColor);
+            GameManager.renderer.SendToRenderer(position, sprite);
         }
     }
 }

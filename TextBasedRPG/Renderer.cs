@@ -8,45 +8,20 @@ namespace TextBasedRPG
 {
     internal class Renderer
     {
-        char[,] spritesToRender;
-        ConsoleColor[,] spriteColors;
+        Sprite[,] spritesToRender;
+        private Sprite[,] spritesToRenderReset;
 
         public Renderer()
         {
-            ResetRenderBuffer();
-        }
+            char[,] loadedMap = Universal.loadMap();
+            spritesToRenderReset = new Sprite[loadedMap.GetLength(0), loadedMap.GetLength(1)];
+            spritesToRender = new Sprite[loadedMap.GetLength(0), loadedMap.GetLength(1)];
 
-        public void SendToRenderer(int x, int y, char sprite, ConsoleColor color = ConsoleColor.White)
-        {
-            spritesToRender[x,y] = sprite;
-            spriteColors[x,y] = color;
-        }
-
-        public void Render()
-        {
-            for (int x = 0; x < spritesToRender.GetLength(0); x++)
+            for (int x = 0; x < loadedMap.GetLength(0); x++)
             {
-                for (int y = 0; y < spritesToRender.GetLength(1); y++)
+                for (int y = 0; y < loadedMap.GetLength(1); y++)
                 {
-                    Console.SetCursorPosition(x + Universal.OFFSET_X, y + Universal.OFFSET_Y);
-                    Console.ForegroundColor = spriteColors[x, y];
-                    Console.Write(spritesToRender[x, y]);
-                    Console.ResetColor();
-                }
-            }
-
-            ResetRenderBuffer();
-        }
-
-        void ResetRenderBuffer()
-        {
-            spritesToRender = Universal.loadMap();
-
-            for (int x = 0; x < spritesToRender.GetLength(0); x++)
-            {
-                for (int y = 0; y < spritesToRender.GetLength(1); y++)
-                {
-                    char changeTile = spritesToRender[x, y];
+                    char changeTile = loadedMap[x, y];
 
                     switch (changeTile)
                     {
@@ -62,21 +37,42 @@ namespace TextBasedRPG
                             changeTile = ' ';
                             break;
                     }
-                    spritesToRender[x, y] = changeTile;
+                    spritesToRenderReset[x, y] = new Sprite(changeTile, ConsoleColor.White);
                 }
             }
 
-            spriteColors = new ConsoleColor[spritesToRender.GetLength(0), spritesToRender.GetLength(1)];
-
-            for (int x = 0; x < spriteColors.GetLength(0); x++)
-            {
-                for (int y = 0; y < spriteColors.GetLength(1); y++)
-                {
-                    spriteColors[x,y] = ConsoleColor.White;
-                }
-            }
-
+            ResetRenderBuffer();
         }
 
+        public void SendToRenderer(Vector2 position, Sprite sprite)
+        {
+            if (spritesToRender[position.x, position.y].renderPriority >= sprite.renderPriority)
+            {
+                spritesToRender[position.x, position.y] = sprite;
+            }
+        }
+
+        public void Render()
+        {
+            for (int x = 0; x < spritesToRender.GetLength(0); x++)
+            {
+                for (int y = 0; y < spritesToRender.GetLength(1); y++)
+                {
+                    Console.SetCursorPosition(x + Universal.OFFSET_X, y + Universal.OFFSET_Y);
+                    Console.ForegroundColor = spritesToRender[x, y].color;
+                    Console.Write(spritesToRender[x, y].character);
+                    Console.ResetColor();
+                }
+            }
+
+            ResetRenderBuffer();
+        }
+
+        void ResetRenderBuffer()
+        {
+            for (int x = 0; x < spritesToRenderReset.GetLength(0); x++)
+                for (int y = 0; y < spritesToRenderReset.GetLength(1); y++)
+                    spritesToRender[x, y] = spritesToRenderReset[x, y];
+        }
     }
 }

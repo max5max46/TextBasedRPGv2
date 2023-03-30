@@ -8,10 +8,10 @@ namespace TextBasedRPG
 {
     internal class ItemMaxHealthUp : Item
     {
-        public ItemMaxHealthUp(int x, int y, Player player) : base(x, y, player)
+        public ItemMaxHealthUp(Vector2 position, Player player) : base(position, player)
         {
-            sprite = '#';
-            spriteColor = ConsoleColor.Cyan;
+            sprite.character = '#';
+            sprite.color = ConsoleColor.Cyan;
         }
         public override void ItemEffect()
         {

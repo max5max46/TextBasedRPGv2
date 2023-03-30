@@ -9,38 +9,37 @@ namespace TextBasedRPG
     internal class EnemyRunner : Enemy
     {
 
-        public EnemyRunner(int x, int y, EnemyManager manager) : base(x, y)
+        public EnemyRunner(Vector2 position, EnemyManager manager) : base(position)
         {
             health = 2;
             maxHealth = health;
             damage = 0;
-            sprite = 'R';
-            spriteColor = ConsoleColor.Blue;
+            sprite.character = 'R';
+            sprite.color = ConsoleColor.Blue;
         }
 
         public override void Update()
         {
-            tempX = x;
-            tempY = y;
+            tempPosition = position;
 
             //AI Movement
 
-            //Move Towards player
-            if (manager.player.x + manager.player.y - (x + y) < 7 && manager.player.x + manager.player.y - (x + y) > -7)
+            //Move Away from player
+            if (manager.player.position.x + manager.player.position.y - (position.x + position.y) < 6 && manager.player.position.x + manager.player.position.y - (position.x + position.y) > -6)
             {
-                if (Math.Abs(manager.player.x - x) > Math.Abs(manager.player.y - y))
+                if (Math.Abs(manager.player.position.x - position.x) > Math.Abs(manager.player.position.y - position.y))
                 {
-                    if (manager.player.x > x)
-                        x--;
+                    if (manager.player.position.x > position.x)
+                        position.x--;
                     else
-                        x++;
+                        position.x++;
                 }
                 else
                 {
-                    if (manager.player.y > y)
-                        y--;
+                    if (manager.player.position.y > position.y)
+                        position.y--;
                     else
-                        y++;
+                        position.y++;
                 }
             }
             else
@@ -49,16 +48,16 @@ namespace TextBasedRPG
                 switch (Universal.GenerateRandomNumber(1, 4))
                 {
                     case 1:
-                        x++;
+                        position.x++;
                         break;
                     case 2:
-                        x--;
+                        position.x--;
                         break;
                     case 3:
-                        y++;
+                        position.y++;
                         break;
                     case 4:
-                        y--;
+                        position.y--;
                         break;
                 }
             }
