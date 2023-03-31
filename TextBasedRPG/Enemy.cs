@@ -21,7 +21,7 @@ namespace TextBasedRPG
         public virtual void Update()
         {
             //Collision Check with map object
-            if (Universal.loadMap()[position.x, position.y] == 'X' && Universal.loadMap()[position.x, position.y] == 'W')
+            if (Universal.loadMap()[position.x, position.y] == 'X' || Universal.loadMap()[position.x, position.y] == 'W')
             {
                 position = tempPosition;
             }

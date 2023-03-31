@@ -8,14 +8,20 @@ namespace TextBasedRPG
 {
     internal class Renderer
     {
-        Sprite[,] spritesToRender;
-        private Sprite[,] spritesToRenderReset;
+        private Sprite[,] renderBuffer1;
+        private Sprite[,] renderBuffer2;
+        private Sprite[,] renderBufferReset;
+        private bool onBuffer1;
 
         public Renderer()
         {
             char[,] loadedMap = Universal.loadMap();
-            spritesToRenderReset = new Sprite[loadedMap.GetLength(0), loadedMap.GetLength(1)];
-            spritesToRender = new Sprite[loadedMap.GetLength(0), loadedMap.GetLength(1)];
+            
+            renderBufferReset = new Sprite[loadedMap.GetLength(0), loadedMap.GetLength(1)];
+            renderBuffer1 = new Sprite[loadedMap.GetLength(0), loadedMap.GetLength(1)];
+            renderBuffer2 = new Sprite[loadedMap.GetLength(0), loadedMap.GetLength(1)];
+
+            onBuffer1 = true;
 
             for (int x = 0; x < loadedMap.GetLength(0); x++)
             {
@@ -37,7 +43,7 @@ namespace TextBasedRPG
                             changeTile = ' ';
                             break;
                     }
-                    spritesToRenderReset[x, y] = new Sprite(changeTile, ConsoleColor.White);
+                    renderBufferReset[x, y] = new Sprite(changeTile, ConsoleColor.White);
                 }
             }
 
@@ -46,33 +52,69 @@ namespace TextBasedRPG
 
         public void SendToRenderer(Vector2 position, Sprite sprite)
         {
-            if (spritesToRender[position.x, position.y].renderPriority >= sprite.renderPriority)
+            if (onBuffer1)
             {
-                spritesToRender[position.x, position.y] = sprite;
+                if (renderBuffer1[position.x, position.y].renderPriority >= sprite.renderPriority)
+                    renderBuffer1[position.x, position.y] = sprite;
+            }
+            else
+            {
+                if (renderBuffer2[position.x, position.y].renderPriority >= sprite.renderPriority)
+                    renderBuffer2[position.x, position.y] = sprite;
             }
         }
 
         public void Render()
         {
-            for (int x = 0; x < spritesToRender.GetLength(0); x++)
+            for (int x = 0; x < renderBuffer1.GetLength(0); x++)
             {
-                for (int y = 0; y < spritesToRender.GetLength(1); y++)
+                for (int y = 0; y < renderBuffer1.GetLength(1); y++)
                 {
-                    Console.SetCursorPosition(x + Universal.OFFSET_X, y + Universal.OFFSET_Y);
-                    Console.ForegroundColor = spritesToRender[x, y].color;
-                    Console.Write(spritesToRender[x, y].character);
-                    Console.ResetColor();
+                    if (onBuffer1)
+                    {
+                        if (renderBuffer1[x, y] != renderBuffer2[x, y])
+                        {
+                            Console.SetCursorPosition(x + Universal.OFFSET_X, y + Universal.OFFSET_Y);
+                            Console.ForegroundColor = renderBuffer1[x, y].color;
+                            Console.Write(renderBuffer1[x, y].character);
+                            Console.ResetColor();
+                        }
+                    }
+                    else
+                    {
+                        if (renderBuffer2[x, y] != renderBuffer1[x, y])
+                        {
+                            Console.SetCursorPosition(x + Universal.OFFSET_X, y + Universal.OFFSET_Y);
+                            Console.ForegroundColor = renderBuffer2[x, y].color;
+                            Console.Write(renderBuffer2[x, y].character);
+                            Console.ResetColor();
+                        }
+                    }
                 }
             }
+
+            if (onBuffer1)
+                onBuffer1 = false;
+            else
+                onBuffer1 = true;
 
             ResetRenderBuffer();
         }
 
         void ResetRenderBuffer()
         {
-            for (int x = 0; x < spritesToRenderReset.GetLength(0); x++)
-                for (int y = 0; y < spritesToRenderReset.GetLength(1); y++)
-                    spritesToRender[x, y] = spritesToRenderReset[x, y];
+            if (onBuffer1)
+            {
+                for (int x = 0; x < renderBufferReset.GetLength(0); x++)
+                    for (int y = 0; y < renderBufferReset.GetLength(1); y++)
+                        renderBuffer1[x, y] = renderBufferReset[x, y];
+            }
+            else
+            {
+                for (int x = 0; x < renderBufferReset.GetLength(0); x++)
+                    for (int y = 0; y < renderBufferReset.GetLength(1); y++)
+                        renderBuffer2[x, y] = renderBufferReset[x, y];
+            }
         }
     }
 }

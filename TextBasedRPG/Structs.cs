@@ -58,7 +58,7 @@ namespace TextBasedRPG
 
         public static bool operator ==(Sprite a, Sprite b)
         {
-            if (a.character == b.character)
+            if (a.character == b.character && a.color == b.color && a.colorBG == b.colorBG && a.renderPriority == b.renderPriority)
                 return true;
             return false;
         }
