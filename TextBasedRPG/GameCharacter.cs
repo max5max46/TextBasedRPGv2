@@ -13,7 +13,7 @@ namespace TextBasedRPG
         public int maxHealth;
         public int damage;
 
-        public void TakeDamage(int damage = 0)
+        public virtual void TakeDamage(int damage = 0)
         {
             health -= damage;
 

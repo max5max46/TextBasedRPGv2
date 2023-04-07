@@ -15,7 +15,7 @@ namespace TextBasedRPG
         }
         public override void ItemEffect()
         {
-            player.ItemBuff(6, 0, 0);
+            player.ItemBuff(Setting.HEAL_AMOUNT, 0, 0);
             Universal.DisplayText("Picked up a Heal         ");
             collected = true;
         }

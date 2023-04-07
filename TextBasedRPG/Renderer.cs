@@ -74,7 +74,7 @@ namespace TextBasedRPG
                     {
                         if (renderBuffer1[x, y] != renderBuffer2[x, y])
                         {
-                            Console.SetCursorPosition(x + Universal.OFFSET_X, y + Universal.OFFSET_Y);
+                            Console.SetCursorPosition(x + Setting.OFFSET_X, y + Setting.OFFSET_Y);
                             Console.ForegroundColor = renderBuffer1[x, y].color;
                             Console.Write(renderBuffer1[x, y].character);
                             Console.ResetColor();
@@ -84,7 +84,7 @@ namespace TextBasedRPG
                     {
                         if (renderBuffer2[x, y] != renderBuffer1[x, y])
                         {
-                            Console.SetCursorPosition(x + Universal.OFFSET_X, y + Universal.OFFSET_Y);
+                            Console.SetCursorPosition(x + Setting.OFFSET_X, y + Setting.OFFSET_Y);
                             Console.ForegroundColor = renderBuffer2[x, y].color;
                             Console.Write(renderBuffer2[x, y].character);
                             Console.ResetColor();

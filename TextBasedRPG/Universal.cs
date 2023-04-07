@@ -10,11 +10,7 @@ namespace TextBasedRPG
     static public class Universal
     {
         static public Random RNG = new Random();
-
-        public const int OFFSET_X = 1;
-        public const int OFFSET_Y = 1;
-        public const int PLAYER_HEALTH = 10;
-        public const int PLAYER_DAMAGE = 1;
+        static public string mapName;
 
         static public int GenerateRandomNumber(int min, int max)
         {
@@ -23,7 +19,7 @@ namespace TextBasedRPG
 
         static public char[,] loadMap()
         {
-            string[] convertTo2DArray = File.ReadAllText("map.txt").Split('\n');
+            string[] convertTo2DArray = File.ReadAllText(mapName).Split('\n');
             char [,]loadedMap = new char[convertTo2DArray[1].Length, convertTo2DArray.Length];
 
             for (int i = 0; i < convertTo2DArray.Length; i++)

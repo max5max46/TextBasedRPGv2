@@ -15,7 +15,7 @@ namespace TextBasedRPG
         }
         public override void ItemEffect()
         {
-            player.ItemBuff(0, 3, 0);
+            player.ItemBuff(0, Setting.MAX_HEALTH_UP_AMOUNT, 0);
             Universal.DisplayText("Picked up a Max Health Up         ");
             collected = true;
         }

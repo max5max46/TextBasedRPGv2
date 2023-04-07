@@ -10,9 +10,9 @@ namespace TextBasedRPG
     {
         public EnemyBouncer(Vector2 position, EnemyManager manager) : base(position)
         {
-            health = 5;
+            health = Setting.BOUNCER_HEALTH;
             maxHealth = health;
-            damage = 2;
+            damage = Setting.BOUNCER_DAMAGE;
             sprite.character = 'B';
             sprite.color = ConsoleColor.Magenta;
         }

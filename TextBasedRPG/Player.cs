@@ -15,26 +15,12 @@ namespace TextBasedRPG
         public Player()
         {
             alive = true;
-            health = Universal.PLAYER_HEALTH;
-            maxHealth = Universal.PLAYER_HEALTH;
-            damage = Universal.PLAYER_DAMAGE;
+            health = Setting.PLAYER_HEALTH;
+            maxHealth = health;
+            damage = Setting.PLAYER_DAMAGE;
             sprite.character = 'P';
-            sprite.color = ConsoleColor.Green;
+            sprite.color = ConsoleColor.Yellow;
             sprite.renderPriority = 1;
-
-            char[,] loadedMap = Universal.loadMap();
-
-            for (int i = 0; i < loadedMap.GetLength(0); i++)
-            {
-                for (int j = 0; j < loadedMap.GetLength(1); j++)
-                {
-                    if (loadedMap[i, j] == 'P')
-                    {
-                        position.x = i;
-                        position.y = j;
-                    }
-                }
-            }
 
             tempPosition = position;
 
@@ -43,7 +29,10 @@ namespace TextBasedRPG
         public void Update()
         {
             if (health == 0)
+            {
+                GameManager.EndGame();
                 return;
+            }
 
             tempPosition = position;
 
@@ -63,6 +52,9 @@ namespace TextBasedRPG
             if (keyInfo.KeyChar == 'd' || keyInfo.Key == ConsoleKey.RightArrow)
                 position.x++;
 
+            if (keyInfo.Key == ConsoleKey.Escape)
+                GameManager.EndGame();
+
             //Collision Check with map object
             if (Universal.loadMap()[position.x, position.y] == 'X')
             {
@@ -72,9 +64,12 @@ namespace TextBasedRPG
             //Collision with win
             if (Universal.loadMap()[position.x, position.y] == 'W')
             {
-                Universal.DisplayText("YOU WIN!!!!!");
+                GameManager.ChangeLevel();
                 position = tempPosition;
             }
+
+            if (enemyManager == null)
+                Console.ReadKey();
 
             //Collision Check with Enemys
             if (enemyManager.IsEnemyHere(position, true))
@@ -91,10 +86,10 @@ namespace TextBasedRPG
             }
         }
 
-        public void SetManagers(EnemyManager enemyManager, ItemManager itemManager)
+        public void SetManagers()
         {
-            this.enemyManager = enemyManager;
-            this.itemManager = itemManager;
+            this.enemyManager = GameManager.enemyManager;
+            this.itemManager = GameManager.itemManager;
         }
 
         private void ClearInput()
@@ -112,6 +107,12 @@ namespace TextBasedRPG
             health += heal;
             if (health > maxHealth)
                 health = maxHealth;
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            this.position = position;
+            this.tempPosition = position;
         }
     }
 }

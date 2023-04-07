@@ -9,26 +9,26 @@ namespace TextBasedRPG
 {
     internal class GameManager
     {
-        bool gameLoop;
+        static bool gameLoop;
+        static public int whichLevel;
 
+        static public Player player;
         static public Renderer renderer;
-        Player player;
         static public EnemyManager enemyManager;
         static public ItemManager itemManager;
         static public HUD UI;
+        static MainMenu menu;
+        static LoadLevel loadLevel;
 
 
         public GameManager()
         {
+            whichLevel = 5;
             gameLoop = true;
-
-            renderer = new Renderer();
+            
+            menu = new MainMenu();
             player = new Player();
-            enemyManager = new EnemyManager(player);
-            itemManager = new ItemManager(player);
-            UI = new HUD(player, enemyManager);
-            player.SetManagers(enemyManager, itemManager);
-            enemyManager.GiveAllEnemysTheEnemyManager();
+            ChangeLevel();
 
         }
 
@@ -37,7 +37,6 @@ namespace TextBasedRPG
 
             while (gameLoop)
             {
-
                 itemManager.Draw();
                 enemyManager.Draw();
                 player.Draw();
@@ -52,9 +51,14 @@ namespace TextBasedRPG
             }
         }
 
-        public void EndGame()
+        static public void EndGame()
         {
             gameLoop = false;
+        }
+
+        static public void ChangeLevel()
+        {
+            loadLevel = new LoadLevel(whichLevel, player, enemyManager, itemManager, renderer, UI);
         }
     }
 }

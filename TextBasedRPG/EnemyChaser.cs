@@ -10,9 +10,9 @@ namespace TextBasedRPG
     {
         public EnemyChaser(Vector2 position, EnemyManager manager) : base(position)
         {
-            health = 3;
+            health = Setting.CHASER_HEALTH;
             maxHealth = health;
-            damage = 1;
+            damage = Setting.CHASER_DAMAGE;
             sprite.character = 'C';
             sprite.color = ConsoleColor.Red;
         }

@@ -11,9 +11,9 @@ namespace TextBasedRPG
 
         public EnemyRunner(Vector2 position, EnemyManager manager) : base(position)
         {
-            health = 2;
+            health = Setting.RUNNER_HEALTH;
             maxHealth = health;
-            damage = 0;
+            damage = Setting.RUNNER_DAMAGE;
             sprite.character = 'R';
             sprite.color = ConsoleColor.Blue;
         }

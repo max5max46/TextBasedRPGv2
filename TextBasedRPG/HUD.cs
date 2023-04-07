@@ -23,8 +23,8 @@ namespace TextBasedRPG
 
         public HUD(Player player, EnemyManager enemyManager)
         {
-            offsetX = Universal.OFFSET_X;
-            offsetY = Universal.OFFSET_Y;
+            offsetX = Setting.OFFSET_X;
+            offsetY = Setting.OFFSET_Y;
             loadedMap = Universal.loadMap();
             this.player = player;
 
@@ -80,7 +80,7 @@ namespace TextBasedRPG
 
         public void Update()
         {
-            
+            Console.CursorVisible = false;
             playerDamage = player.damage;
             playerHealth = player.health;
             playerMaxHealth = player.maxHealth;

@@ -12,8 +12,8 @@ namespace TextBasedRPG
         public Vector2 tempPosition;
         public Sprite sprite;
 
-        static public int offsetX = Universal.OFFSET_X;
-        static public int offsetY = Universal.OFFSET_Y;
+        static public int offsetX = Setting.OFFSET_X;
+        static public int offsetY = Setting.OFFSET_Y;
 
 
         public virtual void Draw()

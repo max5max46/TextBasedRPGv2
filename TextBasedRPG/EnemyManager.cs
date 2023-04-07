@@ -25,7 +25,7 @@ namespace TextBasedRPG
             {
                 for (int y = 0; y < loadedMap.GetLength(1); y++)
                 {
-                    if (loadedMap[x, y] == 'B' || loadedMap[x, y] == 'R' || loadedMap[x, y] == 'C')
+                    if (loadedMap[x, y] == 'B' || loadedMap[x, y] == 'R' || loadedMap[x, y] == 'C' || loadedMap[x, y] == 'M')
                         totalEnemys++;
                 }
             }
@@ -53,7 +53,13 @@ namespace TextBasedRPG
                         enemys[enemyArrayIndex] = new EnemyBouncer(new Vector2(x, y), enemyManager);
                         enemyArrayIndex++;
                     }
-                        
+
+                    if (loadedMap[x, y] == 'M')
+                    {
+                        enemys[enemyArrayIndex] = new EnemyBoss(new Vector2(x, y), enemyManager);
+                        enemyArrayIndex++;
+                    }
+
                 }
             }
         }

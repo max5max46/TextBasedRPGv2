@@ -15,7 +15,7 @@ namespace TextBasedRPG
         }
         public override void ItemEffect()
         {
-            player.ItemBuff(0, 0, 1);
+            player.ItemBuff(0, 0, Setting.DAMAGE_UP_AMOUNT);
             Universal.DisplayText("Picked up a Damage Up         ");
             collected = true;
         }
