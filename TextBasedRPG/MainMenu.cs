@@ -12,7 +12,7 @@ namespace TextBasedRPG
         {
             //Plays Music Track
             System.Media.SoundPlayer musicPlayer = new System.Media.SoundPlayer();
-            musicPlayer.SoundLocation = "MafiaMadnessBgMusic.wav";
+            musicPlayer.SoundLocation = "lib/music/MafiaMadnessBgMusic.wav";
             musicPlayer.PlayLooping();
 
             Console.WriteLine("          _____   ______   _________    ____________  ____________  ________          \n" +
@@ -28,7 +28,7 @@ namespace TextBasedRPG
                               "                        █ █ █  █▄▄█  █  █  █▀██  █▀▀    ▀▄    ▀▄                      \n" +
                               "                        █   █  █  █  █▄▄▀  █  █  █▄▄▄  █▄▄▀  █▄▄▀                     \n\n\n" +
                               "                                Press any Button to Begin                             \n\n\n\n\n\n" +
-                              " By: Dylan Adams                                                               v1.0.0 ");
+                              " By: Dylan Adams                                                               v1.0.1 ");
 
 
             Console.ReadKey(true);

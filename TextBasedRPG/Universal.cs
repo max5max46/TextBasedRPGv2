@@ -19,7 +19,7 @@ namespace TextBasedRPG
 
         static public char[,] loadMap()
         {
-            string[] convertTo2DArray = File.ReadAllText(mapName).Split('\n');
+            string[] convertTo2DArray = File.ReadAllText("lib/maps/" + mapName).Split('\n');
             char [,]loadedMap = new char[convertTo2DArray[1].Length, convertTo2DArray.Length];
 
             for (int i = 0; i < convertTo2DArray.Length; i++)

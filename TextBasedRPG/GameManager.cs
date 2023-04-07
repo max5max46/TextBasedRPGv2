@@ -23,7 +23,7 @@ namespace TextBasedRPG
 
         public GameManager()
         {
-            whichLevel = 5;
+            whichLevel = 1;
             gameLoop = true;
             
             menu = new MainMenu();

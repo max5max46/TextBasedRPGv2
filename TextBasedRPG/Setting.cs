@@ -12,8 +12,8 @@ namespace TextBasedRPG
         public const int OFFSET_Y = 1;
 
         //Player Setting
-        public const int PLAYER_HEALTH = 10;
-        public const int PLAYER_DAMAGE = 20;
+        public const int PLAYER_HEALTH = 5;
+        public const int PLAYER_DAMAGE = 1;
 
         //Enemy Setting
         public const int CHASER_HEALTH = 3;
